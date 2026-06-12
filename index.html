@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalLens - Discover Austin's Small Businesses</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-home"></i>
+                <span id="logo-text">LocalLens</span>
+            </div>
+            <div class="nav-items">
+                <a href="index.html" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="map.html" class="nav-item">
+                    <i class="fas fa-map"></i>
+                    <span>Map</span>
+                </a>
+                <a href="add-business.html" class="nav-item">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Business</span>
+                </a>
+                <div class="nav-brand">
+                    <i class="fas fa-search-location"></i>
+                    <span>LocalLens</span>
+                </div>
+                <div class="search-container">
+                    <input type="text" placeholder="Search businesses..." id="home-search">
+                    <button type="button"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="account.html" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Austin Background -->
+    <section class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>Welcome to LocalLens</h1>
+                <p>Discover and support Austin's amazing small businesses</p>
+                <button class="cta-button" onclick="window.location.href='map.html'">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Explore Businesses
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How LocalLens Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Find Local Businesses</h3>
+                    <p>Use our interactive map to discover small businesses near you</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Search & Filter</h3>
+                    <p>Search by type of business, cuisine, or use filters to find exactly what you're looking for</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Support & Review</h3>
+                    <p>Leave reviews, save your favorites, and help promote the businesses you love</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-us">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About LocalLens</h2>
+                    <p>
+                        LocalLens was created during an internship with a simple mission: to help give back to the Austin community 
+                        by promoting and supporting small businesses that deserve recognition. We believe that small businesses are 
+                        the heart of our city, and they deserve a platform to thrive.
+                    </p>
+                    <p>
+                        Our team is passionate about creating meaningful connections between customers and local entrepreneurs. 
+                        Whether you're looking for the best taco truck, unique boutique shops, or hidden gem restaurants, 
+                        LocalLens is here to help you discover what makes Austin special.
+                    </p>
+                    <p>
+                        Join us in supporting local businesses and building stronger community connections, one discovery at a time.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&h=600&fit=crop" alt="Austin Community">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LocalLens</h3>
+                    <p>Discover and support Austin's small businesses</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="map.html">Map</a></li>
+                        <li><a href="account.html">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LocalLens. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
