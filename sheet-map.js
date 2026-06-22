@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const GOOGLE_SHEET_CSV_URL = 'PASTE_YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE';
+    const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0jl438oFGXjpUeNWNCxHUwwVtmt9GM5jEj6DteIq-VUQYgyWwH3m-_CuJN_TKagZ62vgSfT5JGOus/pub?output=csv';
     const DEFAULT_CENTER = [30.2672, -97.7431];
     const SCORE_FIELDS = ['taste', 'priceScore', 'setting', 'customerService', 'waitTime'];
 
