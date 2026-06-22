@@ -800,25 +800,11 @@ function initializeInteractiveElements() {
 }
 
 function switchView(view) {
-    const viewButtons = document.querySelectorAll('.view-btn');
-    viewButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-view') === view) {
-            btn.classList.add('active');
-        }
+    document.querySelectorAll('.view-btn').forEach(button => {
+        button.classList.toggle('active', button.getAttribute('data-view') === view);
     });
 
-    const businessList = document.getElementById('business-list');
-    if (businessList) {
-        if (view === 'grid') {
-            businessList.style.display = 'grid';
-            businessList.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
-            businessList.style.gap = '20px';
-        } else {
-            businessList.style.display = 'flex';
-            businessList.style.flexDirection = 'column';
-        }
-    }
+    document.getElementById('business-list')?.classList.toggle('grid-view', view === 'grid');
 }
 
 // Mock data
