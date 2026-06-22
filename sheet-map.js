@@ -18,7 +18,7 @@
     async function initializeSheetMap() {
         if (!document.getElementById('map')) return;
 
-        connectFilters();
+        connectMapControls();
 
         if (!window.L) {
             showMapMessage('The map library did not load. Check the Leaflet links in map.html.');
@@ -206,15 +206,43 @@
         `).join('');
     }
 
-    function connectFilters() {
+    function connectMapControls() {
         const applyButton = document.getElementById('apply-filters');
-        if (!applyButton) return;
+        const filterButton = document.getElementById('filter-btn');
+        const filterDropdown = document.getElementById('filter-dropdown');
+        const toggleMapButton = document.getElementById('toggle-map');
+        const mapLayout = document.querySelector('.map-business-container');
 
-        applyButton.addEventListener('click', event => {
+        filterButton?.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            filterDropdown?.classList.toggle('show');
+        });
+
+        filterDropdown?.addEventListener('click', event => event.stopPropagation());
+
+        applyButton?.addEventListener('click', event => {
             event.preventDefault();
             event.stopImmediatePropagation();
             applyFilters();
         }, true);
+
+        toggleMapButton?.addEventListener('click', () => {
+            if (!mapLayout) return;
+
+            const expanded = mapLayout.classList.toggle('map-expanded');
+            toggleMapButton.innerHTML = expanded
+                ? '<i class="fas fa-list"></i> Show Locations'
+                : '<i class="fas fa-expand-alt"></i> Expand Map';
+
+            window.setTimeout(() => map?.invalidateSize(), 100);
+        });
+
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.filter-container')) {
+                filterDropdown?.classList.remove('show');
+            }
+        });
     }
 
     function applyFilters() {
@@ -322,7 +350,21 @@
         #map { min-height: 420px; background: #eef1f4; }
         .sheet-map-message { max-width: 260px; text-align: center; line-height: 1.4; }
         .sheet-empty-state { padding: 32px 20px; color: #666; text-align: center; }
-        .sheet-business-item { cursor: pointer; }
+        .sheet-business-item { display: block; min-width: 0; cursor: pointer; }
+        .business-list.grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            align-content: start;
+            gap: 16px;
+            padding: 16px;
+        }
+        .business-list.grid-view .sheet-business-item {
+            border: 1px solid #e1e5ea;
+            border-radius: 6px;
+            padding: 18px;
+        }
+        .map-business-container.map-expanded { grid-template-columns: minmax(0, 1fr); }
+        .map-business-container.map-expanded .business-list-section { display: none; }
         .sheet-business-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
         .sheet-business-heading h3 { margin: 0; }
         .sheet-rating, .sheet-popup-rating { color: #b45309; white-space: nowrap; }
