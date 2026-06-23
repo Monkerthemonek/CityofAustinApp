@@ -131,7 +131,19 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js?v=6"></script>
     <script src="sheet-map.js?v=6"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.view-btn').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var view = button.getAttribute('data-view');
+                    document.querySelectorAll('.view-btn').forEach(function (candidate) {
+                        candidate.classList.toggle('active', candidate === button);
+                    });
+                    document.getElementById('business-list')?.classList.toggle('grid-view', view === 'grid');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
