@@ -154,7 +154,7 @@
     function renderMarkers(filteredLocations) {
         if (!map) return;
 
-        markers.forEach(marker => marker.remove());
+        markers.forEach(markerInfo => markerInfo.marker.remove());
         markers = [];
 
         if (!filteredLocations.length) {
