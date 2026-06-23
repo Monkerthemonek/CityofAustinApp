@@ -1,15 +1,39 @@
 (function () {
     'use strict';
 
-    const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0jl438oFGXjpUeNWNCxHUwwVtmt9GM5jEj6DteIq-VUQYgyWwH3m-_CuJN_TKagZ62vgSfT5JGOus/pub?output=csv';
+    const PUBLISHED_SHEET_BASE_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0jl438oFGXjpUeNWNCxHUwwVtmt9GM5jEj6DteIq-VUQYgyWwH3m-_CuJN_TKagZ62vgSfT5JGOus/pub';
     const DEFAULT_CENTER = [30.2672, -97.7431];
-    const SCORE_FIELDS = ['taste', 'priceScore', 'setting', 'customerService', 'waitTime'];
+    const SHEET_SOURCES = [
+        {
+            id: 'food',
+            label: 'Food',
+            gid: '0',
+            scores: [
+                { key: 'taste', label: 'Taste', headers: ['taste'] },
+                { key: 'priceScore', label: 'Price', headers: ['price_score', 'price_rating'] },
+                { key: 'setting', label: 'Setting', headers: ['setting', 'atmosphere'] },
+                { key: 'customerService', label: 'Service', headers: ['customer_service', 'service'] },
+                { key: 'waitTime', label: 'Wait time', headers: ['wait_time', 'wait'] }
+            ]
+        },
+        {
+            id: 'hot-spots',
+            label: 'Hot Spots',
+            gid: '26394551',
+            scores: [
+                { key: 'parkingAvailability', label: 'Parking', headers: ['parking_availability', 'parking'] },
+                { key: 'priceScore', label: 'Price', headers: ['price_score', 'price_rating'] },
+                { key: 'setting', label: 'Setting', headers: ['setting'] },
+                { key: 'incidentFrequency', label: 'Incidents', headers: ['incident_frequency', 'safety', 'incidents'] },
+                { key: 'busyness', label: 'Busyness', headers: ['busyness', 'busy'] }
+            ]
+        }
+    ];
 
     let map = null;
     let markers = [];
     let locations = [];
 
-    // Prevent the old demo map from loading fake locations.
     if (typeof window.initializeMap === 'function') window.initializeMap = function () {};
     if (typeof window.loadMockBusinessData === 'function') window.loadMockBusinessData = function () {};
 
@@ -27,27 +51,29 @@
 
         createMap();
 
-        if (!GOOGLE_SHEET_CSV_URL || GOOGLE_SHEET_CSV_URL.includes('PASTE_YOUR')) {
-            renderLocations([]);
-            showMapMessage('Paste the published Google Sheet CSV link into sheet-map.js.');
-            return;
-        }
-
         try {
-            const response = await fetch(GOOGLE_SHEET_CSV_URL, { cache: 'no-store' });
-            if (!response.ok) throw new Error(`Google Sheet request failed (${response.status})`);
-
-            locations = parseLocations(await response.text());
+            const results = await Promise.all(SHEET_SOURCES.map(loadSourceLocations));
+            locations = results.flat();
             renderLocations(locations);
 
             if (!locations.length) {
-                showMapMessage('No complete locations were found. Check the coordinates and all five scores.');
+                showMapMessage('No complete locations were found. Check coordinates and all score columns.');
             }
         } catch (error) {
             console.error('Could not load locations:', error);
             renderLocations([]);
-            showMapMessage('The spreadsheet could not be loaded. Publish the correct tab as CSV and check its link.');
+            showMapMessage('The spreadsheet could not be loaded. Make sure both tabs are published to the web.');
         }
+    }
+
+    async function loadSourceLocations(source) {
+        const response = await fetch(buildCsvUrl(source.gid), { cache: 'no-store' });
+        if (!response.ok) throw new Error(`${source.label} request failed (${response.status})`);
+        return parseLocations(await response.text(), source);
+    }
+
+    function buildCsvUrl(gid) {
+        return `${PUBLISHED_SHEET_BASE_URL}?gid=${encodeURIComponent(gid)}&single=true&output=csv`;
     }
 
     function createMap() {
@@ -61,7 +87,7 @@
         }).addTo(map);
     }
 
-    function parseLocations(csvText) {
+    function parseLocations(csvText, source) {
         const rows = parseCsvRows(csvText);
         if (rows.length < 2) return [];
 
@@ -73,24 +99,30 @@
                 record[header] = String(row[columnIndex] || '').trim();
             });
 
+            const scores = source.scores.map(score => ({
+                ...score,
+                value: parseScore(getValue(record, ...score.headers))
+            }));
+
             const location = {
-                id: index + 1,
+                id: `${source.id}-${index + 1}`,
+                sourceId: source.id,
+                sourceLabel: source.label,
                 name: getValue(record, 'name', 'business_name', 'location'),
-                category: getValue(record, 'category', 'type'),
-                price: getValue(record, 'price', 'price_range'),
+                category: getValue(record, 'category', 'type') || source.label,
                 description: getValue(record, 'description', 'notes'),
-                taste: parseScore(getValue(record, 'taste')),
-                priceScore: parseScore(getValue(record, 'price_score', 'price_rating')),
-                setting: parseScore(getValue(record, 'setting', 'atmosphere')),
-                customerService: parseScore(getValue(record, 'customer_service', 'service')),
-                waitTime: parseScore(getValue(record, 'wait_time', 'wait')),
+                scores,
                 lat: Number(getValue(record, 'latitude', 'lat')),
                 lng: Number(getValue(record, 'longitude', 'lng', 'lon')),
                 address: getValue(record, 'address'),
-                website: safeWebsite(getValue(record, 'website', 'url'))
+                website: safeWebsite(getValue(record, 'website', 'url')),
+                ratingFromSheet: parseScore(getValue(record, 'overall_rating', 'rating'))
             };
 
-            location.rating = averageScores(location);
+            location.rating = Number.isFinite(location.ratingFromSheet)
+                ? location.ratingFromSheet
+                : averageScores(location.scores);
+
             return location;
         }).filter(isCompleteLocation);
     }
@@ -99,7 +131,8 @@
         return Boolean(location.name)
             && Number.isFinite(location.lat)
             && Number.isFinite(location.lng)
-            && SCORE_FIELDS.every(field => Number.isFinite(location[field]));
+            && location.scores.every(score => Number.isFinite(score.value))
+            && Number.isFinite(location.rating);
     }
 
     function parseScore(value) {
@@ -107,10 +140,10 @@
         return Number.isFinite(score) && score >= 1 && score <= 5 ? score : NaN;
     }
 
-    function averageScores(location) {
-        const scores = SCORE_FIELDS.map(field => location[field]);
-        if (scores.some(score => !Number.isFinite(score))) return NaN;
-        return Math.round((scores.reduce((total, score) => total + score, 0) / scores.length) * 10) / 10;
+    function averageScores(scores) {
+        if (scores.some(score => !Number.isFinite(score.value))) return NaN;
+        const total = scores.reduce((sum, score) => sum + score.value, 0);
+        return Math.round((total / scores.length) * 10) / 10;
     }
 
     function renderLocations(filteredLocations) {
@@ -135,7 +168,7 @@
                 .addTo(map)
                 .bindPopup(buildPopup(location));
 
-            markers.push(marker);
+            markers.push({ id: location.id, marker });
             bounds.extend([location.lat, location.lng]);
         });
 
@@ -159,10 +192,13 @@
             item.className = 'business-item sheet-business-item';
             item.innerHTML = `
                 <div class="sheet-business-heading">
-                    <h3>${escapeHtml(location.name)}</h3>
+                    <div>
+                        <span class="sheet-source-badge">${escapeHtml(location.sourceLabel)}</span>
+                        <h3>${escapeHtml(location.name)}</h3>
+                    </div>
                     <strong class="sheet-rating">&#9733; ${location.rating.toFixed(1)}/5</strong>
                 </div>
-                <p>${escapeHtml([location.category, location.price].filter(Boolean).join(' | '))}</p>
+                <p class="sheet-category">${escapeHtml(location.category)}</p>
                 <div class="score-grid">${scoreBreakdown(location)}</div>
                 ${location.address ? `<p>${escapeHtml(location.address)}</p>` : ''}
                 ${location.description ? `<p>${escapeHtml(location.description)}</p>` : ''}
@@ -170,8 +206,8 @@
 
             item.addEventListener('click', () => {
                 map.setView([location.lat, location.lng], 16);
-                const marker = markers.find(candidate => candidate.getLatLng().equals([location.lat, location.lng]));
-                if (marker) marker.openPopup();
+                const match = markers.find(candidate => candidate.id === location.id);
+                if (match) match.marker.openPopup();
             });
 
             list.appendChild(item);
@@ -185,6 +221,7 @@
 
         return `
             <div class="sheet-popup">
+                <span class="sheet-source-badge">${escapeHtml(location.sourceLabel)}</span>
                 <strong>${escapeHtml(location.name)}</strong>
                 <div class="sheet-popup-rating">&#9733; ${location.rating.toFixed(1)}/5</div>
                 <div class="score-grid">${scoreBreakdown(location)}</div>
@@ -195,14 +232,8 @@
     }
 
     function scoreBreakdown(location) {
-        return [
-            ['Taste', location.taste],
-            ['Price', location.priceScore],
-            ['Setting', location.setting],
-            ['Service', location.customerService],
-            ['Wait time', location.waitTime]
-        ].map(([label, score]) => `
-            <span><b>${label}</b> ${formatScore(score)}</span>
+        return location.scores.map(score => `
+            <span><b>${escapeHtml(score.label)}</b> ${formatScore(score.value)}</span>
         `).join('');
     }
 
@@ -212,6 +243,7 @@
         const filterDropdown = document.getElementById('filter-dropdown');
         const toggleMapButton = document.getElementById('toggle-map');
         const mapLayout = document.querySelector('.map-business-container');
+        const searchInput = document.getElementById('map-search');
 
         filterButton?.addEventListener('click', event => {
             event.preventDefault();
@@ -226,6 +258,8 @@
             event.stopImmediatePropagation();
             applyFilters();
         }, true);
+
+        searchInput?.addEventListener('input', applyFilters);
 
         toggleMapButton?.addEventListener('click', () => {
             if (!mapLayout) return;
@@ -246,15 +280,20 @@
     }
 
     function applyFilters() {
-        const price = normalizePriceFilter(document.getElementById('price-filter')?.value || '');
         const category = document.getElementById('category-filter')?.value.trim().toLowerCase() || '';
+        const source = document.getElementById('source-filter')?.value.trim().toLowerCase() || '';
         const minimumRating = Number(document.getElementById('rating-filter')?.value || 0);
+        const searchTerm = document.getElementById('map-search')?.value.trim().toLowerCase() || '';
 
         const filtered = locations.filter(location => {
-            const matchesPrice = !price || location.price === price;
             const matchesCategory = !category || location.category.toLowerCase() === category;
+            const matchesSource = !source || location.sourceId === source;
             const matchesRating = !minimumRating || location.rating >= minimumRating;
-            return matchesPrice && matchesCategory && matchesRating;
+            const searchableText = [location.name, location.category, location.sourceLabel, location.address, location.description]
+                .join(' ')
+                .toLowerCase();
+            const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+            return matchesCategory && matchesSource && matchesRating && matchesSearch;
         });
 
         renderLocations(filtered);
@@ -279,11 +318,6 @@
 
     function normalizeHeader(header) {
         return String(header).trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
-    }
-
-    function normalizePriceFilter(value) {
-        const cleanValue = String(value).trim();
-        return ({ '1': '$', '2': '$$', '3': '$$$', '4': '$$$$' })[cleanValue] || cleanValue;
     }
 
     function parseCsvRows(csvText) {
@@ -327,8 +361,9 @@
 
     function safeWebsite(value) {
         if (!value) return '';
+        const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
         try {
-            const url = new URL(value);
+            const url = new URL(withProtocol);
             return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
         } catch {
             return '';
@@ -366,11 +401,14 @@
         .map-business-container.map-expanded { grid-template-columns: minmax(0, 1fr); }
         .map-business-container.map-expanded .business-list-section { display: none; }
         .sheet-business-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-        .sheet-business-heading h3 { margin: 0; }
+        .sheet-business-heading h3 { margin: 4px 0 0; }
+        .sheet-source-badge { display: inline-flex; width: fit-content; padding: 3px 8px; color: #225c68; background: #e6f1f2; border-radius: 999px; font-size: 0.72rem; font-weight: 800; }
+        .sheet-category { color: #58656c; font-weight: 600; }
         .sheet-rating, .sheet-popup-rating { color: #b45309; white-space: nowrap; }
         .score-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 12px; margin: 10px 0; font-size: 0.85rem; }
         .score-grid span { display: flex; justify-content: space-between; gap: 8px; }
         .sheet-popup { min-width: 220px; }
+        .sheet-popup strong { display: block; margin-top: 6px; }
         .sheet-popup p { margin: 8px 0 0; }
         @media (max-width: 560px) { .score-grid { grid-template-columns: 1fr; } }
     `;
