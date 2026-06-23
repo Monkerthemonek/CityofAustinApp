@@ -132,7 +132,7 @@ body {
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                url('https://media.istockphoto.com/id/502584531/photo/austin-texas-evening-excitement-cityscape-skyline-skyscrapers-congress-avenue-bridge.jpg?s=612x612&w=0&k=20&c=U9JGG8VbX6Uw9K2JgxAeu4mZpPZ9GYiydTza9-tlOPU=');
+                url('https://images.unsplash.com/photo-1666969565832-b55bf42a900d?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-size: cover;
     background-position: center;
     display: flex;
