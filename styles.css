@@ -148,13 +148,19 @@ body {
 }
 
 .cta-button {
-    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    background: rgba(6, 64, 43, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
     font-size: 1.1rem;
     cursor: pointer;
+    box-shadow:
+        0 8px 32px rgba(6, 64, 43, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    font-weight: 600;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-flex;
@@ -163,8 +169,11 @@ body {
 }
 
 .cta-button:hover {
+    background: rgba(6, 64, 43, 0.35);
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 
+        0 12px 40px rgba(6, 64, 43, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 /* How It Works Section */
