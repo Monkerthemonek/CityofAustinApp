@@ -219,6 +219,7 @@
 
 .score-input {
     min-width: 0;
+    position: relative;
 }
 
 .score-input > div {
