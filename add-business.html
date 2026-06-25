@@ -235,6 +235,7 @@
     <script src="script.js?v=8"></script>
     <script>
         document.addEventListener('DOMContentLoaded', initializeAddBusinessForm);
+        const REVIEW_WEB_APP_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
 
         function initializeAddBusinessForm() {
             const form = document.getElementById('add-business-form');
@@ -348,9 +349,11 @@
                 dateAdded: new Date().toISOString()
             };
 
-            const savedBusinesses = JSON.parse(localStorage.getItem('submittedBusinesses') || '[]');
-            savedBusinesses.push(formData);
-            localStorage.setItem('submittedBusinesses', JSON.stringify(savedBusinesses));
+            fetch(REVIEW_WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(formData)
+            });
 
             document.querySelector('.submission-layout').hidden = true;
             document.getElementById('success-message').hidden = false;
