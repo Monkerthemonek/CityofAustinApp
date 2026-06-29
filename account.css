@@ -3,6 +3,10 @@
     color: #17232b;
 }
 
+.account-page [hidden] {
+    display: none !important;
+}
+
 .account-page .nav-logo {
     color: #fff;
     text-decoration: none;
