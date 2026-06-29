@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalLens - Account</title>
-    <link rel="stylesheet" href="styles.css?v=9">
-    <link rel="stylesheet" href="account.css?v=1">
+    <link rel="stylesheet" href="styles.css?v=10">
+    <link rel="stylesheet" href="account.css?v=2">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="account-page">
@@ -34,7 +34,7 @@
             <div>
                 <p class="account-kicker">Member access</p>
                 <h1>Your LocalLens account</h1>
-                <p>Create an account before submitting businesses. This keeps the review sheet cleaner and helps prevent spam.</p>
+                <p>Create an account before submitting businesses. Usernames and emails must be unique, and accounts must be verified before posting.</p>
             </div>
             <a class="account-add-link" href="add-business.html"><i class="fas fa-plus"></i> Add business</a>
         </section>
@@ -70,8 +70,13 @@
             <form id="signup-form" class="auth-form" autocomplete="on">
                 <div class="form-grid account-form-grid">
                     <div class="form-group">
-                        <label for="signup-name">Name</label>
+                        <label for="signup-name">Display name</label>
                         <input type="text" id="signup-name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="local_user" required>
+                        <p class="input-help">Letters, numbers, and underscores only.</p>
                     </div>
                     <div class="form-group">
                         <label for="signup-email">Email</label>
@@ -95,16 +100,37 @@
                 <div class="profile-summary">
                     <div class="profile-avatar" id="profile-avatar">L</div>
                     <div>
-                        <p class="account-kicker">Signed in</p>
+                        <p class="account-kicker" id="verification-label">Signed in</p>
                         <h2 id="profile-name">LocalLens user</h2>
                         <p id="profile-email">you@example.com</p>
+                        <p id="profile-username" class="profile-username">@username</p>
                     </div>
                 </div>
                 <div class="profile-actions">
-                    <a class="account-primary-btn" href="add-business.html"><i class="fas fa-plus"></i> Add business</a>
+                    <a class="account-primary-btn" id="profile-add-business" href="add-business.html"><i class="fas fa-plus"></i> Add business</a>
                     <button class="account-secondary-btn" id="logout-button" type="button"><i class="fas fa-arrow-right-from-bracket"></i> Log out</button>
                 </div>
             </div>
+
+            <section id="verification-card" class="account-card verification-card" hidden>
+                <div class="section-title-row">
+                    <span class="status-icon warning"><i class="fas fa-envelope"></i></span>
+                    <div>
+                        <h2>Verify your email</h2>
+                        <p id="verification-message">Enter the code sent to your email before submitting businesses.</p>
+                    </div>
+                </div>
+                <form id="verification-form" class="verification-form">
+                    <div class="form-group">
+                        <label for="verification-code">Verification code</label>
+                        <input type="text" id="verification-code" maxlength="6" inputmode="numeric" placeholder="123456" required>
+                    </div>
+                    <div class="verification-actions">
+                        <button class="account-primary-btn" type="submit"><i class="fas fa-check"></i> Verify</button>
+                        <button class="account-secondary-btn" id="resend-code-button" type="button"><i class="fas fa-paper-plane"></i> Resend code</button>
+                    </div>
+                </form>
+            </section>
 
             <div class="account-grid">
                 <article class="account-card status-card">
@@ -133,8 +159,12 @@
                 <form id="profile-form" class="profile-form">
                     <div class="form-grid account-form-grid">
                         <div class="form-group">
-                            <label for="edit-name">Name</label>
+                            <label for="edit-name">Display name</label>
                             <input type="text" id="edit-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-username">Username</label>
+                            <input type="text" id="edit-username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required>
                         </div>
                         <div class="form-group">
                             <label for="edit-email">Email</label>
@@ -157,6 +187,6 @@
         </section>
     </main>
 
-    <script src="account.js?v=1"></script>
+    <script src="account.js?v=2"></script>
 </body>
 </html>
