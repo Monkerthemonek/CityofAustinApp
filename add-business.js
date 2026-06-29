@@ -134,15 +134,27 @@ function updateSubmissionAccess() {
     const submitButton = document.getElementById('submit-business-button');
     const helper = document.getElementById('submission-helper');
 
-    accountGate.hidden = Boolean(user);
-
     if (!user) {
+        accountGate.hidden = false;
+        accountGate.querySelector('h2').textContent = 'Log in before submitting';
+        accountGate.querySelector('p').textContent = 'You can preview the form, but submissions only work from a LocalLens account.';
         cooldownGate.hidden = true;
         submitButton.disabled = true;
         helper.innerHTML = '<i class="fas fa-lock"></i> Log in or create an account before submitting.';
         return;
     }
 
+    if (!user.verified) {
+        accountGate.hidden = false;
+        accountGate.querySelector('h2').textContent = 'Verify your email before submitting';
+        accountGate.querySelector('p').textContent = 'Your account is logged in, but your email needs to be verified first.';
+        cooldownGate.hidden = true;
+        submitButton.disabled = true;
+        helper.innerHTML = '<i class="fas fa-envelope"></i> Verify your email on the Account page before submitting.';
+        return;
+    }
+
+    accountGate.hidden = true;
     const remaining = getRemainingCooldown(user);
     cooldownGate.hidden = remaining <= 0;
     submitButton.disabled = remaining > 0;
@@ -167,6 +179,7 @@ function buildSubmission() {
         submitted_at: new Date().toISOString(),
         status: 'Pending',
         submitted_by: user.email,
+        submitted_username: user.username || '',
         name: document.getElementById('business-name').value.trim(),
         category: document.getElementById('business-category').value,
         description: document.getElementById('business-description').value.trim(),
@@ -185,6 +198,7 @@ function buildSubmission() {
         id: Date.now(),
         dateAdded: new Date().toISOString(),
         submittedBy: user.email,
+        submittedUsername: user.username || '',
         rating
     };
 }
@@ -206,6 +220,12 @@ async function handleAddBusiness(event) {
 
     if (!user) {
         showToast('Please log in before submitting a business.', 'error');
+        window.location.href = 'account.html';
+        return;
+    }
+
+    if (!user.verified) {
+        showToast('Please verify your email before submitting a business.', 'error');
         window.location.href = 'account.html';
         return;
     }
