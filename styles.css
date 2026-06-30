@@ -65,8 +65,7 @@ body {
 .nav-items {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 18px;
 }
 
 .nav-item {
@@ -90,32 +89,21 @@ body {
     margin-right: 8px;
 }
 
-.nav-brand {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.nav-brand i {
-    margin-right: 10px;
-}
-
 .search-container {
     position: relative;
     display: flex;
     align-items: center;
+    flex: 1;
+    max-width: 350px;
+    margin: 0 20px;
 }
 
 .search-container input {
+    width: 100%;
     padding: 10px 40px 10px 15px;
     border: none;
     border-radius: 25px;
-    width: 250px;
     outline: none;
-    font-size: 14px;
 }
 
 .search-container button {
