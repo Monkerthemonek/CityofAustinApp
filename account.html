@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalLens - Account</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="account.css?v=2">
+    <link rel="stylesheet" href="responsive.css?v=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <!-- Navigation Bar -->
+<body class="account-page">
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
@@ -30,7 +31,7 @@
                 </a>
                 <div class="search-container">
                     <input type="text" placeholder="Search businesses..." id="account-search">
-                    <button type="button"><i class="fas fa-search"></i></button>
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
                 </div>
                 <a href="account.html" class="nav-item active">
                     <i class="fas fa-user"></i>
@@ -40,248 +41,164 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Account Section -->
-        <div class="account-container">
-            <!-- Authentication Section -->
-            <div id="auth-section" class="auth-section">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" data-tab="login">Login</button>
-                    <button class="auth-tab" data-tab="signup">Sign Up</button>
-                </div>
+    <main class="account-main">
+        <section class="account-hero">
+            <div>
+                <p class="account-kicker">Member access</p>
+                <h1>Your LocalLens account</h1>
+                <p>Create an account before submitting businesses. Usernames and emails must be unique, and accounts must be verified before posting.</p>
+            </div>
+            <a class="account-add-link" href="add-business.html"><i class="fas fa-plus"></i> Add business</a>
+        </section>
 
-                <!-- Login Form -->
-                <div id="login-form" class="auth-form active">
-                    <h2>Welcome Back!</h2>
-                    <form id="login-form-element">
-                        <div class="form-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Password</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        <div class="form-options">
-                            <label>
-                                <input type="checkbox" id="remember-me">
-                                Remember me
-                            </label>
-                            <a href="#" class="forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="submit" class="submit-btn">Login</button>
-                    </form>
-                    <div class="social-login">
-                        <p>Or continue with</p>
-                        <div class="social-buttons">
-                            <button class="social-btn google">
-                                <i class="fab fa-google"></i>
-                                Google
-                            </button>
-                            <button class="social-btn facebook">
-                                <i class="fab fa-facebook"></i>
-                                Facebook
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sign Up Form -->
-                <div id="signup-form" class="auth-form">
-                    <h2>Join LocalLens</h2>
-                    <form id="signup-form-element">
-                        <div class="form-group">
-                            <label for="signup-name">Full Name</label>
-                            <input type="text" id="signup-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-email">Email</label>
-                            <input type="email" id="signup-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-password">Password</label>
-                            <input type="password" id="signup-password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm-password">Confirm Password</label>
-                            <input type="password" id="confirm-password" required>
-                        </div>
-                        <div class="form-options">
-                            <label>
-                                <input type="checkbox" id="agree-terms" required>
-                                I agree to the Terms of Service and Privacy Policy
-                            </label>
-                        </div>
-                        <button type="submit" class="submit-btn">Create Account</button>
-                    </form>
+        <section id="signed-out-view" class="account-card auth-card">
+            <div class="auth-intro">
+                <span class="auth-icon"><i class="fas fa-user-shield"></i></span>
+                <div>
+                    <h2>Sign in or create an account</h2>
+                    <p>Your account is saved in this browser for this class project. Use the same browser when submitting places.</p>
                 </div>
             </div>
 
-            <!-- User Profile Section (Hidden by default) -->
-            <div id="profile-section" class="profile-section" style="display: none;">
-                <div class="profile-header">
-                    <div class="profile-info">
-                        <div class="profile-picture-container">
-                            <img id="profile-picture" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face" alt="Profile Picture">
-                            <button id="change-profile-pic" class="change-pic-btn">
-                                <i class="fas fa-camera"></i>
-                            </button>
-                        </div>
-                        <div class="profile-details">
-                            <h2 id="profile-username">John Doe</h2>
-                            <p id="profile-bio">Food enthusiast and local business supporter</p>
-                        </div>
+            <div class="auth-tabs" role="tablist" aria-label="Account options">
+                <button class="auth-tab active" type="button" data-tab="login">Log in</button>
+                <button class="auth-tab" type="button" data-tab="signup">Create account</button>
+            </div>
+
+            <form id="login-form" class="auth-form active" autocomplete="on">
+                <div class="form-grid account-form-grid">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
                     </div>
-                    <button id="edit-profile-btn" class="edit-profile-btn">
-                        <i class="fas fa-edit"></i>
-                        Edit Profile
-                    </button>
-                </div>
-
-                <!-- Profile Tabs -->
-                <div class="profile-tabs">
-                    <button class="profile-tab active" data-tab="favorites">Favorites</button>
-                    <button class="profile-tab" data-tab="recent">Recently Viewed</button>
-                    <button class="profile-tab" data-tab="reviews">My Reviews</button>
-                </div>
-
-                <!-- Favorites Tab -->
-                <div id="favorites-tab" class="profile-content active">
-                    <div class="favorites-grid">
-                        <div class="favorite-item">
-                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop" alt="Business">
-                            <div class="favorite-info">
-                                <h4>Taco Paradise</h4>
-                                <div class="favorite-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.5</span>
-                                </div>
-                                <p>Mexican Food • $$</p>
-                                <button class="remove-favorite">
-                                    <i class="fas fa-heart-broken"></i>
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                        <div class="favorite-item">
-                            <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=300&h=200&fit=crop" alt="Business">
-                            <div class="favorite-info">
-                                <h4>Artisan Coffee Co.</h4>
-                                <div class="favorite-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
-                                </div>
-                                <p>Coffee Shop • $</p>
-                                <button class="remove-favorite">
-                                    <i class="fas fa-heart-broken"></i>
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Your password" required>
                     </div>
                 </div>
+                <button class="account-primary-btn" type="submit"><i class="fas fa-right-to-bracket"></i> Log in</button>
+            </form>
 
-                <!-- Recently Viewed Tab -->
-                <div id="recent-tab" class="profile-content">
-                    <div class="recent-list">
-                        <div class="recent-item">
-                            <div class="recent-info">
-                                <h4>Local Bookstore</h4>
-                                <p>Visited 2 days ago</p>
-                                <div class="recent-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.2</span>
-                                </div>
-                            </div>
-                            <a href="#" class="view-again-btn">View Again</a>
-                        </div>
-                        <div class="recent-item">
-                            <div class="recent-info">
-                                <h4>Community Garden</h4>
-                                <p>Visited 1 week ago</p>
-                                <div class="recent-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.7</span>
-                                </div>
-                            </div>
-                            <a href="#" class="view-again-btn">View Again</a>
-                        </div>
+            <form id="signup-form" class="auth-form" autocomplete="on">
+                <div class="form-grid account-form-grid">
+                    <div class="form-group">
+                        <label for="signup-name">Display name</label>
+                        <input type="text" id="signup-name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="local_user" required>
+                        <p class="input-help">Letters, numbers, and underscores only.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" minlength="4" placeholder="At least 4 characters" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm password</label>
+                        <input type="password" id="signup-confirm-password" minlength="4" placeholder="Retype password" required>
                     </div>
                 </div>
+                <button class="account-primary-btn" type="submit"><i class="fas fa-user-plus"></i> Create account</button>
+            </form>
+        </section>
 
-                <!-- Reviews Tab -->
-                <div id="reviews-tab" class="profile-content">
-                    <div class="reviews-list">
-                        <div class="review-item">
-                            <div class="review-header">
-                                <h4>Taco Paradise</h4>
-                                <div class="review-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="review-date">2 days ago</span>
-                            </div>
-                            <p class="review-text">Amazing tacos and friendly service! The margaritas are also fantastic.</p>
-                            <button class="edit-review-btn">
-                                <i class="fas fa-edit"></i>
-                                Edit Review
-                            </button>
-                        </div>
-                        <div class="review-item">
-                            <div class="review-header">
-                                <h4>Artisan Coffee Co.</h4>
-                                <div class="review-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="review-date">1 week ago</span>
-                            </div>
-                            <p class="review-text">Great coffee and cozy atmosphere. A bit pricey but worth it for the quality.</p>
-                            <button class="edit-review-btn">
-                                <i class="fas fa-edit"></i>
-                                Edit Review
-                            </button>
-                        </div>
+        <section id="signed-in-view" class="account-dashboard" hidden>
+            <div class="account-card profile-card">
+                <div class="profile-summary">
+                    <div class="profile-avatar" id="profile-avatar">L</div>
+                    <div>
+                        <p class="account-kicker" id="verification-label">Signed in</p>
+                        <h2 id="profile-name">LocalLens user</h2>
+                        <p id="profile-email">you@example.com</p>
+                        <p id="profile-username" class="profile-username">@username</p>
                     </div>
+                </div>
+                <div class="profile-actions">
+                    <a class="account-primary-btn" id="profile-add-business" href="add-business.html"><i class="fas fa-plus"></i> Add business</a>
+                    <button class="account-secondary-btn" id="logout-button" type="button"><i class="fas fa-arrow-right-from-bracket"></i> Log out</button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Edit Profile Modal -->
-    <div id="edit-profile-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Edit Profile</h2>
-                <button class="close-btn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="edit-profile-form">
-                    <div class="form-group">
-                        <label for="edit-name">Full Name</label>
-                        <input type="text" id="edit-name" value="John Doe">
+            <section id="verification-card" class="account-card verification-card" hidden>
+                <div class="section-title-row">
+                    <span class="status-icon warning"><i class="fas fa-envelope"></i></span>
+                    <div>
+                        <h2>Verify your email</h2>
+                        <p id="verification-message">Enter the code sent to your email before submitting businesses.</p>
                     </div>
+                </div>
+                <form id="verification-form" class="verification-form">
                     <div class="form-group">
-                        <label for="edit-bio">Bio</label>
-                        <textarea id="edit-bio" rows="4">Food enthusiast and local business supporter</textarea>
+                        <label for="verification-code">Verification code</label>
+                        <input type="text" id="verification-code" maxlength="6" inputmode="numeric" placeholder="123456" required>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-email">Email</label>
-                        <input type="email" id="edit-email" value="john.doe@example.com">
+                    <div class="verification-actions">
+                        <button class="account-primary-btn" type="submit"><i class="fas fa-check"></i> Verify</button>
+                        <button class="account-secondary-btn" id="resend-code-button" type="button"><i class="fas fa-paper-plane"></i> Resend code</button>
                     </div>
-                    <button type="submit" class="submit-btn">Save Changes</button>
                 </form>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <script src="script.js"></script>
+            <div class="account-grid">
+                <article class="account-card status-card">
+                    <span class="status-icon"><i class="fas fa-clock"></i></span>
+                    <div>
+                        <h3>Submission cooldown</h3>
+                        <p id="cooldown-status">You can submit a business now.</p>
+                    </div>
+                </article>
+                <article class="account-card status-card">
+                    <span class="status-icon"><i class="fas fa-clipboard-check"></i></span>
+                    <div>
+                        <h3>Review process</h3>
+                        <p>New submissions go to the Review tab first so your group can approve them.</p>
+                    </div>
+                </article>
+            </div>
+
+            <section class="account-card profile-edit-card">
+                <div class="section-title-row">
+                    <div>
+                        <h2>Profile details</h2>
+                        <p>Update the name shown on this browser.</p>
+                    </div>
+                </div>
+                <form id="profile-form" class="profile-form">
+                    <div class="form-grid account-form-grid">
+                        <div class="form-group">
+                            <label for="edit-name">Display name</label>
+                            <input type="text" id="edit-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-username">Username</label>
+                            <input type="text" id="edit-username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-email">Email</label>
+                            <input type="email" id="edit-email" required>
+                        </div>
+                    </div>
+                    <button class="account-secondary-btn" type="submit"><i class="fas fa-save"></i> Save profile</button>
+                </form>
+            </section>
+
+            <section class="account-card submissions-card">
+                <div class="section-title-row">
+                    <div>
+                        <h2>Recent submissions</h2>
+                        <p>Submissions saved from this browser.</p>
+                    </div>
+                </div>
+                <div id="submission-list" class="submission-list"></div>
+            </section>
+        </section>
+    </main>
+
+    <script src="account.js?v=2"></script>
 </body>
 </html>

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalLens - Add Business</title>
-    <link rel="stylesheet" href="styles.css?v=8">
-    <link rel="stylesheet" href="add-business.css?v=8">
+    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="add-business.css?v=9">
+    <link rel="stylesheet" href="add-business-access.css?v=1">
+    <link rel="stylesheet" href="responsive.css?v=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="add-business-page">
@@ -48,6 +50,27 @@
             </div>
             <a class="map-return-link" href="map.html"><i class="fas fa-arrow-left"></i> Back to map</a>
         </header>
+
+        <section id="account-gate" class="account-gate" hidden>
+            <div>
+                <span class="gate-icon"><i class="fas fa-lock"></i></span>
+            </div>
+            <div>
+                <h2>Log in before submitting</h2>
+                <p>You can preview the form, but submissions only work from a LocalLens account.</p>
+            </div>
+            <a href="account.html" class="gate-link">Go to account</a>
+        </section>
+
+        <section id="cooldown-gate" class="account-gate cooldown-gate" hidden>
+            <div>
+                <span class="gate-icon"><i class="fas fa-clock"></i></span>
+            </div>
+            <div>
+                <h2>Submission cooldown active</h2>
+                <p id="cooldown-message">You can submit another business later.</p>
+            </div>
+        </section>
 
         <div class="submission-layout">
             <div class="business-form-container">
@@ -157,12 +180,12 @@
                     </section>
 
                     <div class="form-actions">
-                        <p><i class="fas fa-info-circle"></i> Submissions are saved in this browser until your group approves them.</p>
+                        <p id="submission-helper"><i class="fas fa-info-circle"></i> Submissions go to the Review tab before appearing on the map.</p>
                         <div>
                             <button type="button" class="secondary-btn" id="reset-business-form" title="Reset form">
                                 <i class="fas fa-undo"></i><span>Reset</span>
                             </button>
-                            <button type="submit" class="primary-btn">
+                            <button type="submit" class="primary-btn" id="submit-business-button">
                                 <i class="fas fa-plus"></i><span>Submit business</span>
                             </button>
                         </div>
@@ -211,10 +234,10 @@
         <div id="success-message" class="success-message" hidden>
             <div class="success-content">
                 <i class="fas fa-check-circle"></i>
-                <h3>Business saved</h3>
-                <p>Your draft was saved in this browser.</p>
-                <button class="success-btn" id="add-another-business">Add another</button>
+                <h3>Business submitted for review</h3>
+                <p>Your submission was sent to the Review tab. You can submit another business after the 2-hour cooldown.</p>
                 <button class="success-btn" id="view-business-map">View map</button>
+                <button class="success-btn" id="view-account-page">View account</button>
             </div>
         </div>
     </main>

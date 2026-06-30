@@ -1,0 +1,371 @@
+.account-page {
+    background: #f3f7f6;
+    color: #17232b;
+}
+
+.account-page [hidden] {
+    display: none !important;
+}
+
+.account-page .nav-logo {
+    color: #fff;
+    text-decoration: none;
+}
+
+.account-main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 126px 24px 64px;
+}
+
+.account-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.account-kicker {
+    margin: 0 0 6px;
+    color: #18736f;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.account-hero h1,
+.account-card h2,
+.account-card h3 {
+    color: #17232b;
+    letter-spacing: 0;
+}
+
+.account-hero h1 {
+    margin: 0;
+    font-size: 2.3rem;
+    line-height: 1.12;
+}
+
+.account-hero p:last-child {
+    max-width: 720px;
+    margin: 10px 0 0;
+    color: #5f6e76;
+}
+
+.account-add-link,
+.account-primary-btn,
+.account-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 0;
+    font: inherit;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.account-add-link,
+.account-primary-btn {
+    color: #fff;
+    background: #176d6a;
+}
+
+.account-add-link:hover,
+.account-primary-btn:hover {
+    background: #105653;
+}
+
+.account-secondary-btn {
+    color: #243842;
+    background: #fff;
+    border: 1px solid #cbd7dc;
+}
+
+.account-secondary-btn:hover {
+    background: #edf3f4;
+}
+
+.disabled-link {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.account-card {
+    background: #fff;
+    border: 1px solid #dbe4e7;
+    border-radius: 8px;
+    box-shadow: 0 16px 36px rgba(31, 51, 58, 0.08);
+}
+
+.auth-card {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.auth-intro,
+.profile-summary,
+.status-card,
+.section-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.auth-icon,
+.status-icon {
+    display: inline-flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: #176d6a;
+    background: #e2f2ef;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.status-icon.warning {
+    color: #a86400;
+    background: #fff3d7;
+}
+
+.auth-intro h2,
+.section-title-row h2,
+.profile-card h2 {
+    margin: 0 0 4px;
+    font-size: 1.3rem;
+}
+
+.auth-intro p,
+.section-title-row p,
+.status-card p,
+.profile-card p {
+    margin: 0;
+    color: #64727a;
+}
+
+.profile-username {
+    margin-top: 3px !important;
+    color: #18736f !important;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 28px 0 22px;
+    padding: 5px;
+    background: #eef4f5;
+    border-radius: 8px;
+}
+
+.auth-tab {
+    flex: 1;
+    min-height: 42px;
+    border: 0;
+    border-radius: 6px;
+    color: #52636c;
+    background: transparent;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    color: #173b3a;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(28, 50, 58, 0.08);
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.account-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.account-page .form-group {
+    margin: 0 0 18px;
+}
+
+.account-page .form-group label {
+    color: #31424c;
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.account-page .form-group input {
+    min-height: 44px;
+    border: 1px solid #cbd7dc;
+    border-radius: 6px;
+}
+
+.input-help {
+    margin: 5px 0 0;
+    color: #718089;
+    font-size: 0.78rem;
+}
+
+.account-dashboard {
+    display: grid;
+    gap: 18px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 24px;
+}
+
+.profile-avatar {
+    display: inline-flex;
+    flex: 0 0 68px;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    color: #fff;
+    background: #176d6a;
+    border-radius: 50%;
+    font-size: 1.7rem;
+    font-weight: 900;
+}
+
+.profile-actions,
+.verification-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.status-card,
+.profile-edit-card,
+.submissions-card,
+.verification-card {
+    padding: 24px;
+}
+
+.profile-edit-card,
+.submissions-card,
+.verification-card {
+    display: grid;
+    gap: 18px;
+}
+
+.verification-card {
+    border-left: 5px solid #a86400;
+}
+
+.verification-form {
+    display: grid;
+    gap: 12px;
+}
+
+.verification-form .form-group {
+    max-width: 260px;
+}
+
+.submission-list {
+    display: grid;
+    gap: 10px;
+}
+
+.submission-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px;
+    background: #f6faf9;
+    border: 1px solid #e2eaed;
+    border-radius: 6px;
+}
+
+.submission-row strong {
+    color: #1d3038;
+}
+
+.submission-row span {
+    color: #66757d;
+    font-size: 0.85rem;
+}
+
+.empty-state {
+    padding: 20px;
+    color: #66757d;
+    background: #f6faf9;
+    border: 1px dashed #c8d7dc;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.account-toast {
+    position: fixed;
+    top: 102px;
+    right: 18px;
+    max-width: 320px;
+    padding: 14px 16px;
+    color: #fff;
+    background: #176d6a;
+    border-radius: 6px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+    z-index: 10000;
+}
+
+.account-toast.error {
+    background: #b04435;
+}
+
+.account-toast.info {
+    background: #225c68;
+}
+
+@media (max-width: 820px) {
+    .account-main {
+        padding: 150px 18px 48px;
+    }
+
+    .account-hero,
+    .profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .account-grid,
+    .account-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-card,
+    .profile-card,
+    .status-card,
+    .profile-edit-card,
+    .submissions-card,
+    .verification-card {
+        padding: 20px;
+    }
+}
