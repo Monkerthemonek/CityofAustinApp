@@ -12,6 +12,10 @@ body {
     background-color: #f8f9fa;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -20,13 +24,23 @@ body {
 
 /* Navigation Bar */
 .navbar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(6, 64, 43, 0.9),
+        rgba(34, 197, 94, 0.75)
+    );
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 8px 32px rgba(34, 197, 94, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     padding: 1rem 0;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .nav-container {
@@ -55,8 +69,7 @@ body {
 .nav-items {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 18px;
 }
 
 .nav-item {
@@ -69,8 +82,10 @@ body {
     transition: all 0.3s ease;
 }
 
-.nav-item:hover, .nav-item.active {
-    background: rgba(255,255,255,0.2);
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
     transform: translateY(-2px);
 }
 
@@ -85,6 +100,7 @@ body {
     text-decoration: none;
     display: flex;
     align-items: center;
+    white-space: nowrap;
 }
 
 .nav-brand i {
@@ -95,15 +111,17 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    flex: 1;
+    max-width: 350px;
+    margin: 0 20px;
 }
 
 .search-container input {
+    width: 100%;
     padding: 10px 40px 10px 15px;
     border: none;
     border-radius: 25px;
-    width: 250px;
     outline: none;
-    font-size: 14px;
 }
 
 .search-container button {
@@ -111,7 +129,7 @@ body {
     right: 5px;
     background: none;
     border: none;
-    color: #667eea;
+    color: #06402b;
     cursor: pointer;
     padding: 5px 10px;
 }
@@ -120,7 +138,7 @@ body {
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1920&h=1080&fit=crop');
+                url('https://images.unsplash.com/photo-1666969565832-b55bf42a900d?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -148,13 +166,19 @@ body {
 }
 
 .cta-button {
-    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    background: rgba(6, 64, 43, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
     font-size: 1.1rem;
     cursor: pointer;
+    box-shadow:
+        0 8px 32px rgba(6, 64, 43, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    font-weight: 600;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-flex;
@@ -163,8 +187,11 @@ body {
 }
 
 .cta-button:hover {
+    background: rgba(6, 64, 43, 0.35);
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 
+        0 12px 40px rgba(6, 64, 43, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 /* How It Works Section */
@@ -187,21 +214,32 @@ body {
 }
 
 .step {
+    background: rgba(6, 64, 43, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 30px 25px;
     text-align: center;
-    padding: 30px;
-    border-radius: 15px;
-    background: #f8f9fa;
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px rgba(6, 64, 43, 0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
 }
 
 .step:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.02);
+    background: rgba(6, 64, 43, 0.2);
+    box-shadow: 0 20px 40px rgba(6, 64, 43, 0.25);
 }
 
 .step-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(
+        135deg, 
+        rgba(6, 64, 43, 0.9),
+        rgba(34, 197, 94, 0.8)
+    );
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -221,11 +259,19 @@ body {
     color: #666;
     line-height: 1.6;
 }
+.step:hover .step-icon {
+    transform: scale(1.15);
+    box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
+}
 
 /* About Us Section */
 .about-us {
     padding: 80px 0;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(6, 64, 43, 0.95),
+        rgba(34, 197, 94, 0.85)
+    );
     color: white;
 }
 
@@ -246,6 +292,12 @@ body {
     line-height: 1.8;
     margin-bottom: 1.5rem;
 }
+.about-text {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+}
 
 .about-image {
     border-radius: 15px;
@@ -261,7 +313,7 @@ body {
 
 /* Footer */
 .footer {
-    background: #2c3e50;
+    background: linear-gradient(135deg, #06402b, #0b5f3d);
     color: white;
     padding: 50px 0 20px;
 }
@@ -287,13 +339,13 @@ body {
 }
 
 .footer-section ul li a {
-    color: #bdc3c7;
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-section ul li a:hover {
-    color: white;
+    color: #ffffff;
 }
 
 .social-links {
@@ -338,7 +390,7 @@ body {
 }
 
 .control-btn {
-    background: #667eea;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -351,7 +403,7 @@ body {
 }
 
 .control-btn:hover {
-    background: #5a67d8;
+    background: #85d4b3;
     transform: translateY(-2px);
 }
 
@@ -474,9 +526,9 @@ body {
 }
 
 .view-btn.active {
-    background: #667eea;
+    background: #28a745;
     color: white;
-    border-color: #667eea;
+    border-color: #28a745;
 }
 
 /* Business List */
@@ -540,7 +592,6 @@ body {
 }
 
 .details-btn {
-    background: #667eea;
     color: white;
     border: none;
     padding: 8px 16px;

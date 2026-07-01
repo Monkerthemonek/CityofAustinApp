@@ -4,45 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalLens - Discover Austin's Small Businesses</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="responsive.css?v=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
+<nav class="navbar">
+    <div class="nav-container">
+
+        <!-- Logo -->
+        <a href="index.html" class="nav-logo">
+            <i class="fas fa-search-location"></i>
+            <span>LocalLens</span>
+        </a>
+
+        <!-- Navigation -->
+        <div class="nav-items">
+
+            <a href="index.html" class="nav-item active">
                 <i class="fas fa-home"></i>
-                <span id="logo-text">LocalLens</span>
+                Home
+            </a>
+
+            <a href="map.html" class="nav-item">
+                <i class="fas fa-map"></i>
+                Map
+            </a>
+
+            <a href="add-business.html" class="nav-item">
+                <i class="fas fa-plus"></i>
+                Add Business
+            </a>
+
+            <div class="search-container">
+                <input type="text" placeholder="Search businesses..." id="home-search">
+                <button type="button">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-            <div class="nav-items">
-                <a href="index.html" class="nav-item active">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="map.html" class="nav-item">
-                    <i class="fas fa-map"></i>
-                    <span>Map</span>
-                </a>
-                <a href="add-business.html" class="nav-item">
-                    <i class="fas fa-plus"></i>
-                    <span>Add Business</span>
-                </a>
-                <div class="nav-brand">
-                    <i class="fas fa-search-location"></i>
-                    <span>LocalLens</span>
-                </div>
-                <div class="search-container">
-                    <input type="text" placeholder="Search businesses..." id="home-search">
-                    <button type="button"><i class="fas fa-search"></i></button>
-                </div>
-                <a href="account.html" class="nav-item">
-                    <i class="fas fa-user"></i>
-                    <span>Account</span>
-                </a>
-            </div>
+
+            <a href="account.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                Account
+            </a>
+
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Hero Section with Austin Background -->
     <section class="hero">
@@ -109,7 +118,7 @@
                     </p>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&h=600&fit=crop" alt="Austin Community">
+                    <img src="https://images.unsplash.com/photo-1521223619409-8085d2607891?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Austin Community">
                 </div>
             </div>
         </div>
@@ -131,18 +140,6 @@
                         <li><a href="account.html">Account</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 LocalLens. All rights reserved.</p>
             </div>
         </div>
     </footer>

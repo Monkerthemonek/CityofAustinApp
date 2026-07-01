@@ -4,53 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalLens - Map</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="responsive.css?v=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-home"></i>
-                <span id="logo-text">LocalLens</span>
-            </div>
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-search-location"></i>
+                <span>LocalLens</span>
+            </a>
             <div class="nav-items">
                 <a href="index.html" class="nav-item">
                     <i class="fas fa-home"></i>
-                    <span>Home</span>
+                    Home
                 </a>
                 <a href="map.html" class="nav-item active">
                     <i class="fas fa-map"></i>
-                    <span>Map</span>
+                    Map
                 </a>
                 <a href="add-business.html" class="nav-item">
                     <i class="fas fa-plus"></i>
-                    <span>Add Business</span>
+                    Add Business
                 </a>
-                <div class="nav-brand">
-                    <i class="fas fa-search-location"></i>
-                    <span>LocalLens</span>
-                </div>
                 <div class="search-container">
-                    <input type="text" placeholder="Search businesses..." id="map-search">
+                    <input type="text" placeholder="Search locations..." id="map-search">
                     <button type="button"><i class="fas fa-search"></i></button>
                 </div>
                 <a href="account.html" class="nav-item">
                     <i class="fas fa-user"></i>
-                    <span>Account</span>
+                    Account
                 </a>
             </div>
         </div>
     </nav>
-
-    <!-- Main Content Area-->
     <div class="main-content">
-        <!-- Map Controls -->
         <div class="map-controls">
             <button id="toggle-map" class="control-btn">
-                <i class="fas fa-compress-alt"></i>
-                Toggle Map Size
+                <i class="fas fa-expand-alt"></i>
+                Expand Map
             </button>
             <div class="filter-container">
                 <button id="filter-btn" class="control-btn">
@@ -59,23 +53,21 @@
                 </button>
                 <div id="filter-dropdown" class="filter-dropdown">
                     <div class="filter-group">
-                        <label>Price Range:</label>
-                        <select id="price-filter">
-                            <option value="">Any</option>
-                            <option value="1">$</option>
-                            <option value="2">$$</option>
-                            <option value="3">$$$</option>
-                            <option value="4">$$$$</option>
+                        <label>Location Type:</label>
+                        <select id="source-filter">
+                            <option value="">All</option>
+                            <option value="food">Food</option>
+                            <option value="hot-spots">Hot Spots</option>
                         </select>
                     </div>
                     <div class="filter-group">
                         <label>Category:</label>
                         <select id="category-filter">
                             <option value="">All</option>
-                            <option value="food">Food</option>
-                            <option value="retail">Retail</option>
-                            <option value="services">Services</option>
-                            <option value="attractions">Attractions</option>
+                            <option value="Food">Food</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Services">Services</option>
+                            <option value="Attractions">Attractions</option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -92,155 +84,62 @@
             </div>
         </div>
 
-        <!-- Map and Business List Container -->
         <div class="map-business-container">
-            <!-- Map Section -->
             <div id="map-container" class="map-section">
                 <div id="map">
-                    <!-- Map will be loaded here -->
                     <div class="map-placeholder">
                         <i class="fas fa-map-marked-alt"></i>
                         <p>Loading map...</p>
-                        <p id="location-status">Getting your location...</p>
+                        <p id="location-status">Loading spreadsheet locations...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Business List Section -->
             <div class="business-list-section">
                 <div class="business-list-header">
-                    <h3>Local Businesses</h3>
+                    <h3>Local Locations</h3>
                     <div class="view-toggle">
-                        <button class="view-btn active" data-view="list">
+                        <button class="view-btn active" data-view="list" type="button" aria-label="List view">
                             <i class="fas fa-list"></i>
                         </button>
-                        <button class="view-btn" data-view="grid">
+                        <button class="view-btn" data-view="grid" type="button" aria-label="Grid view">
                             <i class="fas fa-th"></i>
                         </button>
                     </div>
                 </div>
-                
                 <div id="business-list" class="business-list">
-                    <!-- Business items will be populated here -->
-                    <div class="business-item">
-                        <div class="business-info">
-                            <h4>Sample Business</h4>
-                            <div class="business-rating">
-                                <i class="fas fa-star"></i>
-                                <span>4.5</span>
-                            </div>
-                            <p class="business-category">Food</p>
-                            <p class="business-price">$$</p>
-                            <p class="business-distance">0.3 miles away</p>
-                        </div>
-                        <div class="business-actions">
-                            <button class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                            <button class="details-btn">View Details</button>
-                        </div>
-                    </div>
+                    <div class="sheet-empty-state">Loading locations from the spreadsheet...</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Business Details Modal -->
     <div id="business-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modal-business-name">Business Name</h2>
+                <h2 id="modal-business-name">Location Name</h2>
                 <button class="close-btn">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="business-details">
-                    <div class="details-left">
-                        <div class="business-image">
-                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop" alt="Business">
-                        </div>
-                        <div class="business-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span>4.5 (127 reviews)</span>
-                        </div>
-                    </div>
-                    <div class="details-right">
-                        <div class="info-section">
-                            <h3>Information</h3>
-                            <div class="info-item">
-                                <i class="fas fa-tag"></i>
-                                <span>Category: Food</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-dollar-sign"></i>
-                                <span>Price: $$</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-clock"></i>
-                                <span>Hours: 9:00 AM - 9:00 PM</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-parking"></i>
-                                <span>Parking: Street parking available</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Distance: 0.3 miles</span>
-                            </div>
-                        </div>
-                        
-                        <div class="description-section">
-                            <h3>Description</h3>
-                            <p>This amazing local business offers delicious food and great service. They use fresh, local ingredients and have become a favorite in the neighborhood.</p>
-                        </div>
-
-                        <div class="menu-section">
-                            <h3>Menu</h3>
-                            <ul class="menu-list">
-                                <li>Taco Plate - $12</li>
-                                <li>Burrito - $10</li>
-                                <li>Quesadilla - $8</li>
-                                <li>Soft Drink - $2</li>
-                            </ul>
-                        </div>
-
-                        <div class="reviews-section">
-                            <h3>Recent Reviews</h3>
-                            <div class="review-item">
-                                <div class="review-header">
-                                    <span class="reviewer">John D.</span>
-                                    <div class="review-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="review-text">Amazing food and friendly service!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="favorite-btn-modal">
-                    <i class="far fa-heart"></i>
-                    Add to Favorites
-                </button>
-                <button class="write-review-btn">
-                    <i class="fas fa-pen"></i>
-                    Write Review
-                </button>
+                <p>Location details load from the map list.</p>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="sheet-map.js?v=6"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.view-btn').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var view = button.getAttribute('data-view');
+                    document.querySelectorAll('.view-btn').forEach(function (candidate) {
+                        candidate.classList.toggle('active', candidate === button);
+                    });
+                    document.getElementById('business-list')?.classList.toggle('grid-view', view === 'grid');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
