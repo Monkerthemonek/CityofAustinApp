@@ -33,7 +33,9 @@ function initializeApp() {
     
     // Initialize interactive elements
     initializeInteractiveElements();
-    // Map locations are loaded from the published Google Sheet.
+    
+    // Load mock business data
+    loadMockBusinessData();
 }
 
 // User data management
@@ -821,11 +823,25 @@ function initializeInteractiveElements() {
 }
 
 function switchView(view) {
-    document.querySelectorAll('.view-btn').forEach(button => {
-        button.classList.toggle('active', button.getAttribute('data-view') === view);
+    const viewButtons = document.querySelectorAll('.view-btn');
+    viewButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-view') === view) {
+            btn.classList.add('active');
+        }
     });
 
-    document.getElementById('business-list')?.classList.toggle('grid-view', view === 'grid');
+    const businessList = document.getElementById('business-list');
+    if (businessList) {
+        if (view === 'grid') {
+            businessList.style.display = 'grid';
+            businessList.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
+            businessList.style.gap = '20px';
+        } else {
+            businessList.style.display = 'flex';
+            businessList.style.flexDirection = 'column';
+        }
+    }
 }
 
 // Mock data
