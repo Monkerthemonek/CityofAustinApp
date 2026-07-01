@@ -567,22 +567,43 @@ function toggleMapSize() {
     }
 }
 
-function loadBusinessesNearUser() {
     // Simulate loading businesses near user
-    setTimeout(() => {
-        const mapPlaceholder = document.querySelector('.map-placeholder');
-        if (mapPlaceholder) {
-            mapPlaceholder.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 20px;"></i>
-                    <h3>Map Loaded</h3>
-                    <p>Showing businesses near you</p>
-                    <p style="color: #666; font-size: 0.9rem;">Lat: ${userLocation.lat.toFixed(4)}, Lng: ${userLocation.lng.toFixed(4)}</p>
-                </div>
-            `;
+ function loadBusinessesNearUser() {
+
+    if (map) {
+        map.remove();
+    }
+
+    map = L.map('map').setView(
+        [userLocation.lat, userLocation.lng],
+        13
+    );
+
+    L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution: '&copy; OpenStreetMap contributors'
         }
-        loadBusinessList();
-    }, 2000);
+    ).addTo(map);
+
+    // User marker
+    L.marker([userLocation.lat, userLocation.lng])
+        .addTo(map)
+        .bindPopup("You are here");
+
+    // Business markers
+    businesses.forEach(business => {
+        L.marker([business.lat, business.lng])
+            .addTo(map)
+            .bindPopup(`
+                <b>${business.name}</b><br>
+                ${business.category}<br>
+                Rating: ${business.rating}
+            `);
+    });
+
+    loadBusinessList();
+
 }
 
 function loadBusinessList() {
@@ -756,8 +777,8 @@ function performSearch(searchTerm) {
         business.description.toLowerCase().includes(searchTerm)
     );
 
-    if (document.getElementById('map.html')) {
-        filteredBusinesses = searchResults.map(business => ({
+    if (window.location.pathname.includes('map.html'))
+            filteredBusinesses = searchResults.map(business => ({
             ...business,
             distance: calculateDistance(userLocation.lat, userLocation.lng, business.lat, business.lng)
         })).filter(business => business.distance < 10);
